@@ -1,6 +1,6 @@
 package com.plcoding.testingcourse.part4.domain
 
-interface AnalyticsLogger {
+interface IAnalyticsLogger {
     fun logEvent(key: String, vararg params: LogParam<Any>)
 }
 

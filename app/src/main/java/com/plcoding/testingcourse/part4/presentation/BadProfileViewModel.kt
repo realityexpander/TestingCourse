@@ -8,13 +8,14 @@ import androidx.lifecycle.AndroidViewModel
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import com.plcoding.testingcourse.R
 
 class BadProfileViewModel(
     private val app: Application // should remove this dependency
 ) : AndroidViewModel(app) {  // should use ViewModel instead of AndroidViewModel
 
-    private val analytics = Firebase.analytics // wont work in tests, should make a wrapper around this (ie: interface + implementation)
+    private val analytics = Firebase.analytics // won't work in tests (not initialized, needs Android context), should make a wrapper around this (ie: interface + implementation)
 
     var state by mutableStateOf(BadProfileState())
         private set
@@ -25,7 +26,7 @@ class BadProfileViewModel(
             param("username", state.username)
         }
         state = state.copy(
-            infoMessage = app.getString(R.string.successfully_saved_profile)
+            infoMessage = app.getString(R.string.successfully_saved_profile) // not testable, this requires the Android Context
         )
     }
 }

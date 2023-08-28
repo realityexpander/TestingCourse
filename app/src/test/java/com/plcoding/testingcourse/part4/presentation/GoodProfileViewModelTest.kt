@@ -1,8 +1,7 @@
 package com.plcoding.testingcourse.part4.presentation
 
-import com.plcoding.testingcourse.part4.domain.AnalyticsLogger
+import com.plcoding.testingcourse.part4.domain.IAnalyticsLogger
 import com.plcoding.testingcourse.part4.domain.LogParam
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 
 internal class GoodProfileViewModelTest {
@@ -12,7 +11,7 @@ internal class GoodProfileViewModelTest {
     @BeforeEach
     fun setUp() {
         viewModel = GoodProfileViewModel(
-            analytics = object : AnalyticsLogger {
+            analytics = object : IAnalyticsLogger {
                 override fun logEvent(key: String, vararg params: LogParam<Any>) = Unit
             }
         )
