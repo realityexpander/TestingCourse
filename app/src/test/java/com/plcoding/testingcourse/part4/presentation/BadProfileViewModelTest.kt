@@ -11,7 +11,9 @@ internal class BadProfileViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        viewModel = BadProfileViewModel()
+//        viewModel = BadProfileViewModel()
+        viewModel = BadProfileViewModel(Application())   // should remove this dependency on Application()
+
     }
 
     @Test
