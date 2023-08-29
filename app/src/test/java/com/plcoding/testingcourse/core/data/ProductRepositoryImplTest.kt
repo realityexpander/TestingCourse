@@ -38,6 +38,22 @@ internal class ProductRepositoryImplTest {
             every { message() } returns "Test message"
         }
 
+        // Match particular exception
+        coEvery { productApi.purchaseProducts(
+            match {
+                it.products.size == 2 &&
+                it.products[0].id == 1 &&
+                it.products[1].id == 2
+            }
+        ) } throws mockk<HttpException> {
+            every { code() } returns 404
+            every { message() } returns "Test message 2"
+        }
+
+        // Force specific return value for any Class
+        mockkConstructor(Product::class)
+        every { anyConstructed<Product>().name } returns "Mocked Ice Cream specific value"
+
         val result = repository.purchaseProducts(listOf())
 
         assertThat(result.isFailure).isTrue()
