@@ -41,7 +41,7 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `Test loading profile success`() = runTest {
+    fun `Test loading profile success`() = runTest { // runTest allows us to use coroutines in tests, automatically skips delays
         viewModel.loadProfile()
 
         advanceUntilIdle()

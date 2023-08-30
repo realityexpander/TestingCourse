@@ -19,10 +19,13 @@ class OrderServiceTest {
         val firebaseUser = mockk<FirebaseUser>(relaxed = true) {
             every { isAnonymous } returns false
         }
+
         firebaseAuth = mockk(relaxed = true) {
             every { currentUser } returns firebaseUser
         }
+
         emailClient = mockk(relaxed = true)
+
         orderService = OrderService(
             auth = firebaseAuth,
             emailClient = emailClient
