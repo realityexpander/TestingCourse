@@ -68,7 +68,7 @@ class ProfileViewModelTest {
     @Test
     fun `Test loading state updates`() = runTest {
         viewModel.state.test {
-            val emission1 = awaitItem()
+            val emission1 = awaitItem()    // Turbine library
             assertThat(emission1.isLoading).isFalse()
 
             viewModel.loadProfile()
