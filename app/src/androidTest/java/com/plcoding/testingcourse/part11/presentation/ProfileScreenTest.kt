@@ -16,7 +16,8 @@ import org.junit.Test
 class ProfileScreenTest {
 
     @get:Rule
-    val composeRule = createComposeRule()
+    val composeRule = createComposeRule()  // just creates the activity
+    // val composeRule = createAndroidComposeRule<MainActivity>() // will start the app for e2e testing
 
     @Test
     fun testProfileScreenUi_profileLoaded() {
@@ -28,6 +29,7 @@ class ProfileScreenTest {
             }
         }
 
+        // A node is just a composable
         composeRule.onNodeWithText("Test username").assertIsDisplayed()
         composeRule.onNodeWithText("Title1").assertIsDisplayed()
         composeRule.onNodeWithText("Body1").assertIsDisplayed()

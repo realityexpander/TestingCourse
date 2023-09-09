@@ -39,12 +39,14 @@ class VideoCallExpirationFlowTest {
         VideoCallExpirationFlow(scheduledCalls, clock).test {
             awaitItem() // Ignore empty emission
 
-            advanceTimeBy(6.minutes, clock) // Expire first call
+            advanceTimeBy(6.minutes, clock) // Expire first call & use our clock
+            // advanceTimeBy(6.minutes) // Expire first call using system clock
             val emission2 = awaitItem()
             assertThat(emission2).contains(scheduledCalls[0])
             assertThat(emission2).doesNotContain(scheduledCalls[1])
 
-            advanceTimeBy(5.minutes, clock) // Expire second call
+            advanceTimeBy(5.minutes, clock) // Expire second call & use our clock
+            // advanceTimeBy(5.minutes) // Expire second call using system clock
             val emission3 = awaitItem()
             assertThat(emission3).contains(scheduledCalls[1])
         }
