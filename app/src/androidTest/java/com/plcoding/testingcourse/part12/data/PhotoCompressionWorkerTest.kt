@@ -27,7 +27,7 @@ class PhotoCompressionWorkerTest {
     fun setUp() {
         val config = Configuration.Builder()
             .setMinimumLoggingLevel(Log.DEBUG)
-            .setExecutor(SynchronousExecutor())
+            .setExecutor(SynchronousExecutor()) // does all work on a single thread
             .build()
         WorkManagerTestInitHelper.initializeTestWorkManager(
             ApplicationProvider.getApplicationContext(),
@@ -37,11 +37,11 @@ class PhotoCompressionWorkerTest {
 
     @Test
     fun testImageCompression_imageGetsSmaller() = runBlocking {
-        val initialPhotoSize = contentUriRule.file.length()
+        val initialPhotoSize = contentUriRule.file.length() // content set with constructor TestContentUriRule
 
         val input = workDataOf(
             PhotoCompressionWorker.KEY_CONTENT_URI to contentUriRule.contentUri.toString(),
-            PhotoCompressionWorker.KEY_COMPRESSION_THRESHOLD to 5_000L
+            PhotoCompressionWorker.KEY_COMPRESSION_THRESHOLD to 5_000L  // 5kb threshold for file size
         )
 
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -49,7 +49,7 @@ class PhotoCompressionWorkerTest {
             .setInputData(input)
             .build()
 
-        val result = request.doWork()
+        val result = request.doWork()  // executes worker synchronously
 
         val outputFilePath = result.outputData.getString(PhotoCompressionWorker.KEY_RESULT_PATH)
         assertThat(outputFilePath).isNotNull()
