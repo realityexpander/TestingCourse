@@ -26,10 +26,15 @@ class CountdownNotificationTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
-    val composeRule = createAndroidComposeRule<MainActivity>()
+    val composeRule =
+        createAndroidComposeRule<MainActivity>()
 
-    @get:Rule
-    val grantPermissionRule = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS)
+    // This is only needed to run on OS versions above 13
+//    @get:Rule
+//    val grantPermissionRule: GrantPermissionRule = if (android.os.Build.VERSION.SDK_INT >= 33)
+//        GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS)
+//    else
+//        GrantPermissionRule.grant(Manifest.permission.ACCESS_NOTIFICATION_POLICY)
 
     @Test
     fun testNotificationCountdown() = runTest {
